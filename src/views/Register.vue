@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-header">Login</div>
           <div class="card-body">
-            <form method="post">
+            <form method="post" @submit.prevent="saveData" enctype="multipart/form-data">
               <div class="mb-3">
                 <label for="id_number" class="form-label">Id Number</label>
                 <input type="text" class="form-control" id="id_number" v-model="id_number">
@@ -46,10 +46,10 @@
                 <input type="text" class="form-control" id="nationality" v-model="nationality">
               </div>
               <div class="custom-file">
-                <input type="file" class="custom-file-input" id="image_path" v-on="image_path">
+                <input type="file" class="custom-file-input" id="image_path" ref="image_path">
                 <label class="custom-file-label" for="customFile" >Choose file</label>
               </div>
-              <button type="submit" @click.prevent="saveData" class="btn btn-primary">Submit</button>
+              <button type="submit"  class="btn btn-primary">Submit</button>
             </form>
           </div>  
         </div>
@@ -77,8 +77,17 @@ import axios from 'axios'
       mounted() {
         console.log('component mounted.')
       },
+  
       methods : {
+        selectFile(){
+            this.image_path = this.$$refs.image_path.files[0];
+        },
+
         saveData(){
+          const formData = new FormData();
+          formData.append('image_path', this.image_path);
+
+          try {
           axios.post('http://127.0.0.1:8000/api/register',{
           id_number : this.id_number,
           person_name : this.person_name,
@@ -88,13 +97,12 @@ import axios from 'axios'
           address : this.address,
           religion : this.religion,
           nationality : this.nationality,
-          image_path : this.image_path
+          formData
           })
           .then(response => console.log(response))
-                  .catch(error => {
-        alert("entered data is wrong", error)
-        this.errored = true
-        })
+          } catch (error) {
+            console.log(error);
+          }
       }
     }
     }
