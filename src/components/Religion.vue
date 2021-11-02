@@ -29,11 +29,15 @@ export default {
         // console.log(this.count)
         console.log(this.chartData);
           })
-        }
+        },
+              forceRerender(){
+        this.componentkey += 1
+      }
       },
+
       created() {
         this.getData()
-
+        this.forceRerender()
       }, 
 
 
@@ -42,14 +46,15 @@ export default {
 
       religions:[],
       count:[],
+      componentkey: 0,
       chartOptions: {
-        hoverBorderWidth: 20
+      hoverBorderWidth: 20
       },
 
       chartData: {
         hoverBackgroundColor: "red",
         hoverBorderWidth: 10,
-        labels:["Green","Red","Yello","Blue"],
+        labels:[],
         datasets: [
           {
             label: "Data One",

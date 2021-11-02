@@ -45,9 +45,9 @@
                 <label for="nationality" class="form-label">Nationality</label>
                 <input type="text" class="form-control" id="nationality" v-model="nationality">
               </div>
-              <div class="mb-3">
-                <label for="image" class="form-label">Add Image</label>
-                <input type="text" class="form-control" id="image_path" v-model="image_path">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="image_path" v-on="image_path">
+                <label class="custom-file-label" for="customFile" >Choose file</label>
               </div>
               <button type="submit" @click.prevent="saveData" class="btn btn-primary">Submit</button>
             </form>
